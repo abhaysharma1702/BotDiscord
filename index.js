@@ -21,11 +21,14 @@ bot.on('message', message => {
     }
  
     var cezar = "206304601303941121";
+    var marco = "261991713541718017";
 
     if(message.author.id == cezar) {
         message.channel.send("E o Cezar");
-    } else {
-        message.channel.send("Não é o cezar");
+    }
+
+    if(message.author.id == marco) {
+        message.channel.send("E o marco");
     }
 
 });
