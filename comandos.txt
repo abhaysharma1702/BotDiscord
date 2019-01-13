@@ -1,0 +1,6 @@
+abrir o bot
+1 abrir o cmd
+2 cd Desktop
+3 cd DiscBot
+
+node .
