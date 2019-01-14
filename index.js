@@ -33,13 +33,14 @@ bot.on('message', message => {
         var numeroAtual = 1;
 
         var si = setInterval(function() {
-            if (numeroAtual >= nInformado) {
+            if (numeroAtual > nInformado) {
                 clearInterval(si);
+                message.channel.send("GO !!");
+                return;
             }
             message.channel.send(numeroAtual)
             numeroAtual++;
         } ,1000);
-
     }
 
 });
