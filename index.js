@@ -1,8 +1,12 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const config = require('./config.json');
+const request = require('request');
 
-
+//Weather Configs
+let apiKey = config.tokenW;
+let cidade = 'Sao Bernardo do Campo';
+let url = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&units=metric`
 
 
 bot.on("error", (e) => console.error(e)); //Se der algum erro, ele mostra o erro no cosole
@@ -14,7 +18,7 @@ bot.on('ready', () => {
 });
 
 
-//Quando entrar no servido
+//Quando alguem entrar no servidor
 bot.on("guildMemberAdd", (member) => {
     console.log(member.user.username + " Entrou no serividor");
     bot.channels.get("533835804728885258").send({embed: {
@@ -53,7 +57,7 @@ bot.on("guildMemberRemove", (member) => {
             url: member.user.avatarURL
           },
         fields: [
-        {  
+        {
         name: "😿",
         value: "Estou triste"
         }],
@@ -72,7 +76,7 @@ bot.on('message', message => {
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
  
 
-    //Comando de contar
+    //#count
     if (message.content.startsWith(config.prefix  + "count")) {
 
         var nInformado = args[1];
@@ -93,6 +97,58 @@ bot.on('message', message => {
         } ,1000);
     }
 
+    //#temperatura
+    if(message.content.startsWith(config.prefix + "temperatura")) {
+
+        //Faz o request para a api de weather
+        request(url, function (err, response, body) {
+            if(err) {
+                console.log('error:', err);
+            } else {
+                let weather = JSON.parse(body);
+                console.log(">Enviando Temperatura");
+                
+                message.channel.send({embed: {
+                    color: 16711680,
+                    author: {
+                      name: bot.user.username,
+                      icon_url: bot.user.avatarURL
+                    },
+                    thumbnail: {
+                        url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBCYmEtOzaBPRfzGMVRrs1BY4hayqsyED7NYmh6CKe-vUEQ1Gt"
+                    },
+                    fields: [{
+                        name: "Temperatura Atual em SBC",
+                        value: weather.main.temp + "°"
+                      },
+                      {
+                        name: "Temp Minima",
+                        value: weather.main.temp_min + "°"
+                      },
+                      {
+                        name: "Temp Maxima",
+                        value: weather.main.temp_max + "°"
+                      },
+                      {
+                        name: "Velocidade do Vento",
+                        value: weather.wind.speed + "m/s"
+                      },
+                      {
+                        name: "Umidade",
+                        value: weather.main.humidity + "%"
+                      }
+                    ],
+                    timestamp: new Date(),
+                    footer: {
+                      icon_url: bot.user.avatarURL,
+                      text: "Pagina 1/1"
+                    }
+                  }
+                });
+            }
+        });
+    }
+
     //#help
     if(message.content.startsWith(config.prefix + "help")) {
         message.channel.send({embed: {
@@ -106,6 +162,10 @@ bot.on('message', message => {
             fields: [{
                 name: "#count",
                 value: "Inicia uma contagem ate o valor informado \n Ex. #count 5"
+              },
+              {
+                name: "#temperatura",
+                value: "Envia a temperatura atual" 
               }
             ],
             timestamp: new Date(),
