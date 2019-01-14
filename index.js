@@ -11,9 +11,19 @@ bot.on('ready', () => {
 
 
 });
+    //Quando entrar no servido
+bot.on("guildMemberAdd", (member) => {
+    console.log(member.user.username + " Entrou no serividor");
+    bot.channels.get("533835804728885258").
+
+    
+    
 
 
-//Quando Alguem enviar mensagem
+
+  });
+
+  //Quando Alguem enviar mensagem
 bot.on('message', message => {
     var args = message.content.substring(config.prefix.length).split(" "); //Pega os argumentos
 
@@ -70,3 +80,4 @@ bot.on('message', message => {
 });
 
 bot.login(config.token);
+
