@@ -27,11 +27,41 @@ bot.on("guildMemberAdd", (member) => {
         description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor!",
         thumbnail: {
             url: member.user.avatarURL
-          },
+        },
+        fields: [
+            {  
+            name: "😻",
+            value: "Aeeeeeeeeee!!!!"
+            }],
         timestamp: new Date(),
       }
     });
 });
+
+//Quando sair do servidor
+bot.on("guildMemberRemove", (member) => {
+    console.log(member.user.username + " Saiu Do Servidor");
+    bot.channels.get("533835804728885258").send({embed: {
+        color: 16711680,
+        author: {
+          name: bot.user.username,
+          icon_url: bot.user.avatarURL
+        },
+        title: "Saiu do Servidor",
+        description: "O usúario " + member.user.username + " saiu de nosso servidor!",
+        thumbnail: {
+            url: member.user.avatarURL
+          },
+        fields: [
+        {  
+        name: "😿",
+        value: "Estou triste"
+        }],
+        timestamp: new Date(),
+      }
+    });
+});
+
 
 //Quando Alguem enviar mensagem
 bot.on('message', message => {
