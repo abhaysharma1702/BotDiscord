@@ -3,6 +3,8 @@ const bot = new Discord.Client();
 const config = require('./config.json');
 
 
+
+
 bot.on("error", (e) => console.error(e)); //Se der algum erro, ele mostra o erro no cosole
 
 //Quando o bot logar
