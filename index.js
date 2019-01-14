@@ -6,7 +6,7 @@ const config = require('./config.json');
 bot.on("error", (e) => console.error(e)); //Se der algum erro, ele mostra o erro no cosole
 //Quando o bot logar
 bot.on('ready', () => {
-    bot.user.setActivity('Salve'); //Seta o que o bot esta jogando
+    bot.user.setActivity('Digite: #help'); //Seta o que o bot esta jogando
     console.log(">Logado");
 
 
@@ -41,6 +41,30 @@ bot.on('message', message => {
             message.channel.send(numeroAtual)
             numeroAtual++;
         } ,1000);
+    }
+
+    //#help
+    if(message.content.startsWith(config.prefix + "help")) {
+        message.channel.send({embed: {
+            color: 16711680,
+            author: {
+              name: bot.user.username,
+              icon_url: bot.user.avatarURL
+            },
+            title: "Comandos",
+            description: "Lista de comandos do servidor :)",
+            fields: [{
+                name: "#count",
+                value: "Inicia uma contagem ate o valor informado \n Ex. #count 5"
+              }
+            ],
+            timestamp: new Date(),
+            footer: {
+              icon_url: bot.user.avatarURL,
+              text: "Pagina 1/1"
+            }
+          }
+        });
     }
 
 });
