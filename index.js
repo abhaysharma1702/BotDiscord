@@ -4,26 +4,34 @@ const config = require('./config.json');
 
 
 bot.on("error", (e) => console.error(e)); //Se der algum erro, ele mostra o erro no cosole
+
 //Quando o bot logar
 bot.on('ready', () => {
     bot.user.setActivity('Digite: #help'); //Seta o que o bot esta jogando
     console.log(">Logado");
-
-
 });
-    //Quando entrar no servido
+
+
+//Quando entrar no servido
 bot.on("guildMemberAdd", (member) => {
     console.log(member.user.username + " Entrou no serividor");
-    bot.channels.get("533835804728885258").
+    bot.channels.get("533835804728885258").send({embed: {
+        color: 16711680,
+        author: {
+          name: bot.user.username,
+          icon_url: bot.user.avatarURL
+        },
+        title: "Bem Vindo",
+        description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor!",
+        thumbnail: {
+            url: member.user.avatarURL
+          },
+        timestamp: new Date(),
+      }
+    });
+});
 
-    
-    
-
-
-
-  });
-
-  //Quando Alguem enviar mensagem
+//Quando Alguem enviar mensagem
 bot.on('message', message => {
     var args = message.content.substring(config.prefix.length).split(" "); //Pega os argumentos
 
