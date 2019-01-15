@@ -4,9 +4,29 @@ const config = require('./config.json');
 const request = require('request');
 
 //Weather Configs
-let apiKey = config.tokenW;
-let cidade = 'Sao Bernardo do Campo';
-let url = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&units=metric`
+var apiKey = config.tokenW;
+var cidade = 'Sao Bernardo do Campo';
+var urlTemp = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&units=metric`
+
+
+//<!------ Lugar pra deixar umas funções que vao ser usadas alguma hora ------>
+
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;           // ---> Gambiarra pra formatar a data e hora do jeito bom
+    }
+    return i;
+}
+var d = new Date();
+var h = addZero(d.getHours());
+var m = addZero(d.getMinutes());    // ---> Gambiarra pra formatar a data e hora do jeito bom
+var s = addZero(d.getSeconds());
+
+
+
+
+
+//<!------ Lugar pra deixar umas funções que vao ser usadas alguma hora ------>
 
 
 bot.on("error", (e) => console.error(e)); //Se der algum erro, ele mostra o erro no cosole
@@ -101,11 +121,11 @@ bot.on('message', message => {
     if(message.content.startsWith(config.prefix + "temperatura")) {
 
         //Faz o request para a api de weather
-        request(url, function (err, response, body) {
+        request(urlTemp, function (err, response, body) {
             if(err) {
                 console.log('error:', err);
             } else {
-                let weather = JSON.parse(body);
+                var weather = JSON.parse(body);
                 console.log(">Enviando Temperatura");
                 
                 message.channel.send({embed: {
@@ -149,6 +169,19 @@ bot.on('message', message => {
         });
     }
 
+    //#Dolar
+    if(message.content.startsWith(config.prefix + "dolar")) {
+        var urlDolar = 'https://api.hgbrasil.com/finance?format=json&key=a67d9b60';
+        request(urlDolar, function (err, response, body){ //faz o request para a api
+            if(err) {
+                console.log('error', error); //Verifica se deu erro
+            } else {
+                var data = JSON.parse(body);
+                message.channel.send("Valor Atual do Dolar: R$ " + data.results.currencies.USD.buy + "  - [" + h + ":" + m + "]"); //Manda a msg com os valores
+            }
+        });
+    }
+
     //#help
     if(message.content.startsWith(config.prefix + "help")) {
         message.channel.send({embed: {
@@ -166,6 +199,10 @@ bot.on('message', message => {
               {
                 name: "#temperatura",
                 value: "Envia a temperatura atual" 
+              },
+              {
+                  name: "#dolar",
+                  value: "Enviar o valor atual do dolar"
               }
             ],
             timestamp: new Date(),
