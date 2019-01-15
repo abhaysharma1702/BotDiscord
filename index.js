@@ -40,9 +40,10 @@ bot.on('ready', () => {
 
 //Quando alguem entrar no servidor
 bot.on("guildMemberAdd", (member) => {
+    var corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
     console.log(member.user.username + " Entrou no serividor");
     bot.channels.get("533835804728885258").send({embed: {
-        color: 16711680,
+        color: corDoEmbed,
         author: {
           name: bot.user.username,
           icon_url: bot.user.avatarURL
@@ -65,8 +66,9 @@ bot.on("guildMemberAdd", (member) => {
 //Quando sair do servidor
 bot.on("guildMemberRemove", (member) => {
     console.log(member.user.username + " Saiu Do Servidor");
+    var corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
     bot.channels.get("533835804728885258").send({embed: {
-        color: 16711680,
+        color: corDoEmbed,
         author: {
           name: bot.user.username,
           icon_url: bot.user.avatarURL
@@ -129,7 +131,7 @@ bot.on('message', message => {
                 console.log(">Enviando Temperatura");
                 
                 message.channel.send({embed: {
-                    color: 16711680,
+                    color: 16768768,
                     author: {
                       name: bot.user.username,
                       icon_url: bot.user.avatarURL
@@ -181,6 +183,34 @@ bot.on('message', message => {
             }
         });
     }
+
+    //#meme
+    if(message.content.startsWith(config.prefix + "meme")) {
+        var corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
+        request("https://api-to.get-a.life/meme", function (err, response, body){ //faz o request para a api
+            if(err) {
+                console.log('error', error); //Verifica se deu erro
+            } else {
+                var data = JSON.parse(body);
+
+                message.channel.send({embed: {
+                    color: corDoEmbed,
+                    author: {
+                      name: bot.user.username,
+                      icon_url: bot.user.avatarURL
+                    },
+                    title: data.text,
+                    image: {
+                        url: data.url
+                    },
+                    timestamp: new Date(),
+                  }
+                });
+            }
+        });
+    }
+
+
     //#smoke
     if(message.content.startsWith(config.prefix + "smoke")) {
         message.channel.send('**BISSSSHES IM SMOKING**').then(async msg => {
@@ -232,6 +262,14 @@ bot.on('message', message => {
               {
                   name: "#dolar",
                   value: "Enviar o valor atual do dolar"
+              },
+              {
+                name: "#smoke",
+                value: "Faz o bot fumar"
+              },
+              {
+                name: "#meme",
+                value: "Envia um meme aleatorio :)"
               }
             ],
             timestamp: new Date(),
