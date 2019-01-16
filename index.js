@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 const config = require('./config.json');
 const request = require('request');
+const translate = require('@vitalets/google-translate-api'); //api do google tradutor
 
 //Weather Configs
 var apiKey = config.tokenW;
@@ -23,6 +24,9 @@ var m = addZero(d.getMinutes());    // ---> Gambiarra pra formatar a data e hora
 var s = addZero(d.getSeconds());
 
 
+function CorRandon() {
+    return Math.floor(Math.random() * 9999999);  // ---> Gera uma cor aleatorio para usar nos embed's
+}
 
 
 
@@ -119,6 +123,38 @@ bot.on('message', message => {
         } ,1000);
     }
 
+    //#translate
+    if(message.content.startsWith(config.prefix + "tradutor")) {
+        var command = "tradutor";
+        var txt = message.content.slice(config.prefix.length + command.length + 1); //Pegando da msg o texto pra traduzir
+        
+        translate(txt, {to: 'pt'})
+        .then(res => {
+            message.channel.send({embed: {
+                color: CorRandon(),
+                author: {
+                  name: bot.user.username,
+                  icon_url: bot.user.avatarURL
+                },
+                title: "Tradução:",
+                description: res.text,
+                thumbnail: {
+                    url: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Google_Translate_logo.svg/250px-Google_Translate_logo.svg.png"
+                },
+                footer: {
+                    icon_url: "",
+                    text: `Traduzido do [${res.from.language.iso}]`
+                },
+                timestamp: new Date(),
+              }
+            });
+
+
+        }).catch(err => {
+            console.error(err);
+        });
+    }
+
     //#temperatura
     if(message.content.startsWith(config.prefix + "temperatura")) {
 
@@ -186,7 +222,6 @@ bot.on('message', message => {
 
     //#meme
     if(message.content.startsWith(config.prefix + "meme")) {
-        var corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
         request("https://api-to.get-a.life/meme", function (err, response, body){ //faz o request para a api
             if(err) {
                 console.log('error', error); //Verifica se deu erro
@@ -194,7 +229,7 @@ bot.on('message', message => {
                 var data = JSON.parse(body);
 
                 message.channel.send({embed: {
-                    color: corDoEmbed,
+                    color: CorRandon(),
                     author: {
                       name: bot.user.username,
                       icon_url: bot.user.avatarURL
@@ -270,6 +305,10 @@ bot.on('message', message => {
               {
                 name: "#meme",
                 value: "Envia um meme aleatorio :)"
+              },
+              {
+                name: "#tradutor",
+                value: "Traduz para o português o texto informado \n Ex. #tradutor Dog"
               }
             ],
             timestamp: new Date(),

@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/marcopandolfo/BotDiscord#readme",
   "dependencies": {
+    "@vitalets/google-translate-api": "^2.5.0",
     "discord.js": "^11.4.2",
+    "google-translate-api": "^2.3.0",
     "request": "^2.88.0"
   }
 }
