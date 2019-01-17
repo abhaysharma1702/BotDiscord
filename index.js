@@ -123,6 +123,62 @@ bot.on('message', message => {
         } ,1000);
     }
 
+    //#cat 
+    if(message.content.startsWith(config.prefix + "cat")) {
+        request("https://api-to.get-a.life/catimg", function (err, response, body){ //faz o request para a api
+            if(err) {
+                console.log('error', error); //Verifica se deu erro
+            } else {
+                var data = JSON.parse(body);
+                
+                message.channel.send({embed: {
+                    color: CorRandon(),
+                    author: {
+                      name: bot.user.username,
+                      icon_url: bot.user.avatarURL
+                    },
+                    image: {
+                        url: data.link
+                    },
+                    footer: {
+                        text: "🐱"
+                    },
+                    timestamp: new Date(),
+                  }
+                });
+            }
+        });
+    }
+
+
+
+    //#dog
+    if(message.content.startsWith(config.prefix + "dog")) {
+        request("https://dog.ceo/api/breeds/image/random", function (err, response, body){ //faz o request para a api
+            if(err) {
+                console.log('error', error); //Verifica se deu erro
+            } else {
+                var data = JSON.parse(body);
+                
+                message.channel.send({embed: {
+                    color: CorRandon(),
+                    author: {
+                      name: bot.user.username,
+                      icon_url: bot.user.avatarURL
+                    },
+                    image: {
+                        url: data.message
+                    },
+                    footer: {
+                        text: "🐶"
+                    },
+                    timestamp: new Date(),
+                  }
+                });
+            }s
+        });
+    }
+
     //#translate
     if(message.content.startsWith(config.prefix + "tradutor")) {
         var command = "tradutor";
