@@ -5,9 +5,9 @@ const request = require('request');
 const translate = require('@vitalets/google-translate-api'); //api do google tradutor
 
 //Weather Configs
-var apiKey = config.tokenW;
-var cidade = 'Sao Bernardo do Campo';
-var urlTemp = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&units=metric`
+let apiKey = config.tokenW;
+let cidade = 'Sao Bernardo do Campo';
+let urlTemp = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&units=metric`
 
 
 //<!------ Lugar pra deixar umas funções que vao ser usadas alguma hora ------>
@@ -18,10 +18,10 @@ function addZero(i) {
     }
     return i;
 }
-var d = new Date();
-var h = addZero(d.getHours());
-var m = addZero(d.getMinutes());    // ---> Gambiarra pra formatar a data e hora do jeito bom
-var s = addZero(d.getSeconds());
+let d = new Date();
+let h = addZero(d.getHours());
+let m = addZero(d.getMinutes());    // ---> Gambiarra pra formatar a data e hora do jeito bom
+let s = addZero(d.getSeconds());
 
 
 function CorRandon() {
@@ -44,7 +44,7 @@ bot.on('ready', () => {
 
 //Quando alguem entrar no servidor
 bot.on("guildMemberAdd", (member) => {
-    var corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
+    let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
     console.log(member.user.username + " Entrou no serividor");
     bot.channels.get("533835804728885258").send({embed: {
         color: corDoEmbed,
@@ -70,7 +70,7 @@ bot.on("guildMemberAdd", (member) => {
 //Quando sair do servidor
 bot.on("guildMemberRemove", (member) => {
     console.log(member.user.username + " Saiu Do Servidor");
-    var corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
+    let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
     bot.channels.get("533835804728885258").send({embed: {
         color: corDoEmbed,
         author: {
@@ -95,7 +95,7 @@ bot.on("guildMemberRemove", (member) => {
 
 //Quando Alguem enviar mensagem
 bot.on('message', message => {
-    var args = message.content.substring(config.prefix.length).split(" "); //Pega os argumentos
+    let args = message.content.substring(config.prefix.length).split(" "); //Pega os argumentos
 
     console.log("> [" + message.author.username + "] - " + message.content);
 
@@ -105,14 +105,14 @@ bot.on('message', message => {
     //#count
     if (message.content.startsWith(config.prefix  + "count")) {
 
-        var nInformado = args[1];
+        let nInformado = args[1];
         if(nInformado >= 10) {
             message.reply("Insira um valor menor");
             return;
         }
-        var numeroAtual = 1;
+        let numeroAtual = 1;
 
-        var si = setInterval(function() {
+        let si = setInterval(function() {
             if (numeroAtual > nInformado) {
                 clearInterval(si);
                 message.channel.send("GO !!");
@@ -124,7 +124,12 @@ bot.on('message', message => {
     }
 
     //#sortear
+    if(message.content.startsWith(config.prefix + "sortear")) {
+        let numeroMaximo = args[1];  //Pega o numero que a pessoa passou
+        let numeroSorteado = Math.floor(Math.random() * numeroMaximo + 1); //Sorteia
 
+        message.reply(numeroSorteado);
+    }
 
     //#cat 
     if(message.content.startsWith(config.prefix + "cat")) {
@@ -132,7 +137,7 @@ bot.on('message', message => {
             if(err) {
                 console.log('error', error); //Verifica se deu erro
             } else {
-                var data = JSON.parse(body);
+                let data = JSON.parse(body);
                 
                 message.channel.send({embed: {
                     color: CorRandon(),
@@ -161,7 +166,7 @@ bot.on('message', message => {
             if(err) {
                 console.log('error', error); //Verifica se deu erro
             } else {
-                var data = JSON.parse(body);
+                let data = JSON.parse(body);
                 
                 message.channel.send({embed: {
                     color: CorRandon(),
@@ -184,8 +189,8 @@ bot.on('message', message => {
 
     //#translate
     if(message.content.startsWith(config.prefix + "tradutor")) {
-        var command = "tradutor";
-        var txt = message.content.slice(config.prefix.length + command.length + 1); //Pegando da msg o texto pra traduzir
+        let command = "tradutor";
+        let txt = message.content.slice(config.prefix.length + command.length + 1); //Pegando da msg o texto pra traduzir
         
         translate(txt, {to: 'pt'})
         .then(res => {
@@ -222,7 +227,7 @@ bot.on('message', message => {
             if(err) {
                 console.log('error:', err);
             } else {
-                var weather = JSON.parse(body);
+                let weather = JSON.parse(body);
                 console.log(">Enviando Temperatura");
                 
                 message.channel.send({embed: {
@@ -268,12 +273,12 @@ bot.on('message', message => {
 
     //#Dolar
     if(message.content.startsWith(config.prefix + "dolar")) {
-        var urlDolar = 'https://api.hgbrasil.com/finance?format=json&key=a67d9b60';
+        let urlDolar = 'https://api.hgbrasil.com/finance?format=json&key=a67d9b60';
         request(urlDolar, function (err, response, body){ //faz o request para a api
             if(err) {
                 console.log('error', error); //Verifica se deu erro
             } else {
-                var data = JSON.parse(body);
+                let data = JSON.parse(body);
                 message.channel.send("Valor Atual do Dolar: R$ " + data.results.currencies.USD.buy + "  - [" + h + ":" + m + "]"); //Manda a msg com os valores
             }
         });
@@ -285,7 +290,7 @@ bot.on('message', message => {
             if(err) {
                 console.log('error', error); //Verifica se deu erro
             } else {
-                var data = JSON.parse(body);
+                let data = JSON.parse(body);
 
                 message.channel.send({embed: {
                     color: CorRandon(),
@@ -376,6 +381,10 @@ bot.on('message', message => {
               {
                 name: "#dog",
                 value: "Envia a foto aleatória de um cachorro"
+              },
+              {
+                name: "#sortear x",
+                value: "Sorteia um numero de 0 a x \n Ex. #sortear 8 -- Sorteia um numero de 0 a 8"
               }
             ],
             timestamp: new Date(),
