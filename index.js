@@ -123,6 +123,9 @@ bot.on('message', message => {
         } ,1000);
     }
 
+    //#sortear
+
+
     //#cat 
     if(message.content.startsWith(config.prefix + "cat")) {
         request("https://api-to.get-a.life/catimg", function (err, response, body){ //faz o request para a api
@@ -365,6 +368,14 @@ bot.on('message', message => {
               {
                 name: "#tradutor",
                 value: "Traduz para o português o texto informado \n Ex. #tradutor Dog"
+              },
+              {
+                name: "cat",
+                value: "Envia uma foto aleatória de um gato"
+              },
+              {
+                name: "#dog",
+                value: "Envia a foto aleatória de um cachorro"
               }
             ],
             timestamp: new Date(),
