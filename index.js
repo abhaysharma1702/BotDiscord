@@ -102,6 +102,26 @@ bot.on('message', message => {
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
  
 
+    //#password
+    if(message.content.startsWith(config.prefix + "password")) {
+        request("http://www.sethcardoza.com/api/rest/tools/random_password_generator/", function (err, response, body){ //faz o request para a api
+            if(err) {
+                console.log('error', error); //Verifica se deu erro
+            } else {
+                message.channel.send({embed: {
+                    color: CorRandon(),
+                    author: {
+                      name: bot.user.username,
+                      icon_url: bot.user.avatarURL
+                    },
+                    title: "Senha Gerada",
+                    description: body
+                  }
+                });
+            }
+        });
+    }
+
     //#count
     if (message.content.startsWith(config.prefix  + "count")) {
 
@@ -385,6 +405,10 @@ bot.on('message', message => {
               {
                 name: "#sortear x",
                 value: "Sorteia um numero de 0 a x \n Ex. #sortear 8 -- Sorteia um numero de 0 a 8"
+              },
+              {
+                name: "#password",
+                value: "Gera uma senha aleatória"
               }
             ],
             timestamp: new Date(),
