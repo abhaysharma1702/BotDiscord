@@ -6,7 +6,7 @@ const translate = require('@vitalets/google-translate-api'); //api do google tra
 
 //Weather Configs
 let apiKey = config.tokenW;
-let cidade = 'Sao Bernardo do Campo';
+let cidade = 'Sao Paulo';
 let urlTemp = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=${apiKey}&units=metric`
 
 
@@ -18,10 +18,6 @@ function addZero(i) {
     }
     return i;
 }
-let d = new Date();
-let h = addZero(d.getHours());
-let m = addZero(d.getMinutes());    // ---> Gambiarra pra formatar a data e hora do jeito bom
-let s = addZero(d.getSeconds());
 
 
 function CorRandon() {
@@ -95,12 +91,35 @@ bot.on("guildMemberRemove", (member) => {
 
 //Quando Alguem enviar mensagem
 bot.on('message', message => {
+
+    let d = new Date();
+    let h = addZero(d.getHours());
+    let m = addZero(d.getMinutes());    // Cada vez que alguem manda msg atualiza a data
+    let s = addZero(d.getSeconds());
+
+
     let args = message.content.substring(config.prefix.length).split(" "); //Pega os argumentos
 
     console.log("> [" + message.author.username + "] - " + message.content);
 
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
  
+
+    //#att 
+    if(message.content.startsWith(config.prefix + "atm")) {
+        console.log("Servidores => " + bot.guilds.size);
+    }
+
+    //#delete
+    if(message.content.startsWith(config.prefix + "delete")) {
+        if(parseInt(args[1]) < 1 || args[1] == "" || args[1] == " " || args[1] == null) {
+            message.channel.send("Por favor insira um numero :) Ex: *delete 3");
+            return;
+        }
+        let number = parseInt(args[1]) + 1;
+        message.channel.fetchMessages({limit: number}).then(messages => message.channel.bulkDelete(messages));
+    }
+
 
     //#password
     if(message.content.startsWith(config.prefix + "password")) {
@@ -124,27 +143,25 @@ bot.on('message', message => {
 
     //#count
     if (message.content.startsWith(config.prefix  + "count")) {
-
-        let nInformado = args[1];
-        if(nInformado >= 10) {
-            message.reply("Insira um valor menor");
-            return;
-        }
         let numeroAtual = 1;
 
         let si = setInterval(function() {
-            if (numeroAtual > nInformado) {
+            if (numeroAtual > 3) {
                 clearInterval(si);
                 message.channel.send("GO !!");
                 return;
             }
-            message.channel.send(numeroAtual)
+            message.channel.send(numeroAtual);
             numeroAtual++;
         } ,1000);
     }
 
     //#sortear
     if(message.content.startsWith(config.prefix + "sortear")) {
+        if(args[1] == null || args[1] == " ") {
+            message.channel.send("Por favor insira um numero maximo Ex. *sortear 10");
+            return;
+        }
         let numeroMaximo = args[1];  //Pega o numero que a pessoa passou
         let numeroSorteado = Math.floor(Math.random() * numeroMaximo + 1); //Sorteia
 
@@ -260,7 +277,7 @@ bot.on('message', message => {
                         url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBCYmEtOzaBPRfzGMVRrs1BY4hayqsyED7NYmh6CKe-vUEQ1Gt"
                     },
                     fields: [{
-                        name: "Temperatura Atual em SBC",
+                        name: "Temperatura Atual em SP",
                         value: weather.main.temp + "°"
                       },
                       {
@@ -362,64 +379,87 @@ bot.on('message', message => {
 
     //#help
     if(message.content.startsWith(config.prefix + "help")) {
-        message.channel.send({embed: {
-            color: 16711680,
-            author: {
-              name: bot.user.username,
-              icon_url: bot.user.avatarURL
-            },
-            title: "Comandos",
-            description: "Lista de comandos do servidor :)",
-            fields: [{
-                name: "#count",
-                value: "Inicia uma contagem ate o valor informado \n Ex. #count 5"
-              },
-              {
-                name: "#temperatura",
-                value: "Envia a temperatura atual" 
-              },
-              {
-                  name: "#dolar",
-                  value: "Enviar o valor atual do dolar"
-              },
-              {
-                name: "#smoke",
-                value: "Faz o bot fumar"
-              },
-              {
-                name: "#meme",
-                value: "Envia um meme aleatorio :)"
-              },
-              {
-                name: "#tradutor",
-                value: "Traduz para o português o texto informado \n Ex. #tradutor Dog"
-              },
-              {
-                name: "cat",
-                value: "Envia uma foto aleatória de um gato"
-              },
-              {
-                name: "#dog",
-                value: "Envia a foto aleatória de um cachorro"
-              },
-              {
-                name: "#sortear x",
-                value: "Sorteia um numero de 0 a x \n Ex. #sortear 8 -- Sorteia um numero de 0 a 8"
-              },
-              {
-                name: "#password",
-                value: "Gera uma senha aleatória"
+        if(args[1] == 2) {
+            //2 pag do help
+            message.channel.send({embed: {
+                color: 16711680,
+                author: {
+                  name: bot.user.username,
+                  icon_url: bot.user.avatarURL
+                },
+                title: "Comandos 2ª pagina",
+                description: "Lista de comandos do servidor :)",
+                fields: [{
+                    name: "*delete x",
+                    value: "Deleta as mensagems da sala \nEx. *delete 5 > Deleta as ultimas 5 mensagems"
+                  }
+                ],
+                timestamp: new Date(),
+                footer: {
+                  icon_url: bot.user.avatarURL,
+                  text: "Pagina 1/2 Para a ver a 2ª pagina digite *help 2"
+                }
               }
-            ],
-            timestamp: new Date(),
-            footer: {
-              icon_url: bot.user.avatarURL,
-              text: "Pagina 1/1"
-            }
-          }
-        });
+            });
+        } else {
+            message.channel.send({embed: {
+                color: 16711680,
+                author: {
+                  name: bot.user.username,
+                  icon_url: bot.user.avatarURL
+                },
+                title: "Comandos",
+                description: "Lista de comandos do servidor :)",
+                fields: [{
+                    name: "*count",
+                    value: "Inicia uma contagem ate o valor informado \n Ex. *count 5"
+                  },
+                  {
+                    name: "*temperatura",
+                    value: "Envia a temperatura atual"
+                  },
+                  {
+                    name: "*dolar",
+                    value: "Enviar o valor atual do dolar"
+                  },
+                  {
+                    name: "*smoke",
+                    value: "Faz o bot fumar"
+                  },
+                  {
+                    name: "*meme",
+                    value: "Envia um meme aleatorio :)"
+                  },
+                  {
+                    name: "*tradutor",
+                    value: "Traduz o texto informado para o português \n Ex. *tradutor Dog"
+                  },
+                  {
+                    name: "*cat",
+                    value: "Envia uma foto aleatória de um gato"
+                  },
+                  {
+                    name: "*dog",
+                    value: "Envia a foto aleatória de um cachorro"
+                  },
+                  {
+                    name: "*sortear x",
+                    value: "Sorteia um numero de 0 a x \n Ex. *sortear 8 -- Sorteia um numero de 0 a 8"
+                  },
+                  {
+                    name: "*password",
+                    value: "Gera uma senha aleatória"
+                  }
+                ],
+                timestamp: new Date(),
+                footer: {
+                  icon_url: bot.user.avatarURL,
+                  text: "Pagina 1/2 Para a ver a 2ª pagina digite *help 2"
+                }
+              }
+            });
+        }
     }
-
 });
 
 bot.login(config.token);
