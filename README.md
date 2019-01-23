@@ -1,5 +1,5 @@
-#Bot para discord util e divertido :)
-
+# Bot para discord util e divertido :)
+# [Invitar bot para seu servidor](https://discordapp.com/oauth2/authorize?client_id=533823138698493954&scope=bot&permissions=1341644225)
 |    Comando   |                 Descrição                |
 |:------------:|:----------------------------------------:|
 | *help        | Lista de comandos completa do servidor   |
