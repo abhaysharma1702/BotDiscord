@@ -412,7 +412,7 @@ bot.on('message', message => {
                 description: "Lista de comandos do servidor :)",
                 fields: [{
                     name: "*count",
-                    value: "Inicia uma contagem ate o valor informado \n Ex. *count 5"
+                    value: "Inicia uma contagem até 3"
                   },
                   {
                     name: "*temperatura",
