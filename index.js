@@ -33,7 +33,7 @@ bot.on("error", (e) => console.error(e)); //Se der algum erro, ele mostra o erro
 
 //Quando o bot logar
 bot.on('ready', () => {
-    bot.user.setActivity('Digite: #help'); //Seta o que o bot esta jogando
+    bot.user.setActivity('Digite: *help'); //Seta o que o bot esta jogando
     console.log(">Logado");
 });
 
@@ -401,7 +401,7 @@ bot.on('message', message => {
                 }
               }
             });
-        } else {
+        } else { //pag 1 do help
             message.channel.send({embed: {
                 color: 16711680,
                 author: {

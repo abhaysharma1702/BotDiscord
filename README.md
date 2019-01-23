@@ -1,4 +1,17 @@
-#Bot para discord feito em JavaScript :)
+#Bot para discord util e divertido :)
+
+|    Comando   |                 Descrição                |
+|:------------:|:----------------------------------------:|
+| *help        | Lista de comandos completa do servidor   |
+| *temperatura | Envia a temperatura atual                |
+| *meme        | Envia um meme aleatorio                  |
+| *count       | 1, 2, 3 GO !!                            |
+| *smoke       | Faz o bot fumar                          |
+| *dog         | Envia uma foto aleatória de um cachorro. |
+| *cat         | Envia uma foto aleatória de um gato.     |
+| *tradutor    | Traduz o texto para o português          |
+
+
 
 ![image](https://user-images.githubusercontent.com/40467826/51577987-ed859280-1ea2-11e9-93be-121ee0e46ce1.png)
 
