@@ -131,6 +131,10 @@ bot.on('message', message => {
         });
     }
 
+    //*ping
+    if(message.content.startsWith(config.prefix + "ping")) {
+        message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\`**`)
+    }
     //*github
     if(message.content.startsWith(config.prefix + "github")) 
         message.channel.send("https://github.com/marcopandolfo/BotDiscord");
