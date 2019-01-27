@@ -1,9 +1,10 @@
 # Bot para discord util e divertido :)
-# [Invitar bot para seu servidor](https://discordapp.com/oauth2/authorize?client_id=533823138698493954&scope=bot&permissions=1341644225)
+# [Invitar o bot para seu servidor](https://discordapp.com/oauth2/authorize?client_id=533823138698493954&scope=bot&permissions=1341644225)
 |    Comando   |                 Descrição                |
 |:------------:|:----------------------------------------:|
 | *help        | Lista de comandos completa do servidor   |
 | *temperatura | Envia a temperatura atual                |
+| *google      | Faz uma pesquisa no google               |
 | *meme        | Envia um meme aleatorio                  |
 | *count       | 1, 2, 3 GO !!                            |
 | *smoke       | Faz o bot fumar                          |

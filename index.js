@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const bot = new Discord.Client(); // Bot
 const config = require('./config.json');
-const request = require('request');
+const request = require('request'); //biblioteca para request
 const translate = require('@vitalets/google-translate-api'); //api do google tradutor
+const google = require("google"); // biblioteca do google
 
 //Weather Configs
 let apiKey = config.tokenW;
@@ -105,12 +106,39 @@ bot.on('message', message => {
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
  
 
-    //#att 
+
+    //*google
+    if (message.content.startsWith(config.prefix + "google")) {
+        google.resultsPerPage = 2; //N° resultados
+        google.protocol = 'https'; //protocolo
+        google.lang = 'pt'; //idioma
+        let nextCounter = 0;
+        
+        google(args, function (err, res) {
+            if (err) console.log("Erro: ", err);
+            
+            for (let i = 0; i < res.links.length; ++i) {
+                let link = res.links[i];
+                message.channel.send(link.title + " " + link.href);
+                
+            }
+            
+            if (nextCounter < 1) {
+                nextCounter += 1
+                if (res.next) res.next();
+            }
+            
+        });
+    }
+
+
+
+    //*atm
     if(message.content.startsWith(config.prefix + "atm")) {
         console.log("Servidores => " + bot.guilds.size);
     }
 
-    //#delete
+    //*delete
     if(message.content.startsWith(config.prefix + "delete")) {
         if(parseInt(args[1]) < 1 || args[1] == "" || args[1] == " " || args[1] == null) {
             message.channel.send("Por favor insira um numero :) Ex: *delete 3");
@@ -121,7 +149,7 @@ bot.on('message', message => {
     }
 
 
-    //#password
+    //*password
     if(message.content.startsWith(config.prefix + "password")) {
         request("http://www.sethcardoza.com/api/rest/tools/random_password_generator/", function (err, response, body){ //faz o request para a api
             if(err) {
@@ -141,7 +169,7 @@ bot.on('message', message => {
         });
     }
 
-    //#count
+    //*count
     if (message.content.startsWith(config.prefix  + "count")) {
         let numeroAtual = 1;
 
@@ -156,7 +184,7 @@ bot.on('message', message => {
         } ,1000);
     }
 
-    //#sortear
+    //*sortear
     if(message.content.startsWith(config.prefix + "sortear")) {
         if(args[1] == null || args[1] == " ") {
             message.channel.send("Por favor insira um numero maximo Ex. *sortear 10");
@@ -168,7 +196,7 @@ bot.on('message', message => {
         message.reply(numeroSorteado);
     }
 
-    //#cat 
+    //*cat 
     if(message.content.startsWith(config.prefix + "cat")) {
         request("https://api-to.get-a.life/catimg", function (err, response, body){ //faz o request para a api
             if(err) {
@@ -197,7 +225,7 @@ bot.on('message', message => {
 
 
 
-    //#dog
+    //*dog
     if(message.content.startsWith(config.prefix + "dog")) {
         request("https://dog.ceo/api/breeds/image/random", function (err, response, body){ //faz o request para a api
             if(err) {
@@ -224,7 +252,7 @@ bot.on('message', message => {
         });
     }
 
-    //#translate
+    //*translate
     if(message.content.startsWith(config.prefix + "tradutor")) {
         let command = "tradutor";
         let txt = message.content.slice(config.prefix.length + command.length + 1); //Pegando da msg o texto pra traduzir
@@ -256,7 +284,7 @@ bot.on('message', message => {
         });
     }
 
-    //#temperatura
+    //*temperatura
     if(message.content.startsWith(config.prefix + "temperatura")) {
 
         //Faz o request para a api de weather
@@ -308,7 +336,7 @@ bot.on('message', message => {
         });
     }
 
-    //#Dolar
+    //*Dolar
     if(message.content.startsWith(config.prefix + "dolar")) {
         let urlDolar = 'https://api.hgbrasil.com/finance?format=json&key=a67d9b60';
         request(urlDolar, function (err, response, body){ //faz o request para a api
@@ -321,7 +349,7 @@ bot.on('message', message => {
         });
     }
 
-    //#meme
+    //*meme
     if(message.content.startsWith(config.prefix + "meme")) {
         request("https://api-to.get-a.life/meme", function (err, response, body){ //faz o request para a api
             if(err) {
@@ -347,7 +375,7 @@ bot.on('message', message => {
     }
 
 
-    //#smoke
+    //*smoke
     if(message.content.startsWith(config.prefix + "smoke")) {
         message.channel.send('**BISSSSHES IM SMOKING**').then(async msg => {
             setTimeout(() => {
@@ -377,7 +405,7 @@ bot.on('message', message => {
         });
     };
 
-    //#help
+    //*help
     if(message.content.startsWith(config.prefix + "help")) {
         if(args[1] == 2) {
             //2 pag do help
@@ -392,6 +420,10 @@ bot.on('message', message => {
                 fields: [{
                     name: "*delete x",
                     value: "Deleta as mensagems da sala \nEx. *delete 5 > Deleta as ultimas 5 mensagems"
+                  },
+                  {
+                    name: "*google",
+                    value: "Faz uma pesquisa no google \nEx. *google mouse gamer"
                   }
                 ],
                 timestamp: new Date(),
