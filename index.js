@@ -423,7 +423,7 @@ bot.on('message', message => {
                   },
                   {
                     name: "*google",
-                    value: "Faz uma pesquisa no google \nEx. *google mouse gamer"
+                    value: "Faz uma pesquisa no google \nEx. *google teclado gamer"
                   }
                 ],
                 timestamp: new Date(),
