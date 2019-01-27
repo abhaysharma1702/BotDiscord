@@ -131,7 +131,9 @@ bot.on('message', message => {
         });
     }
 
-
+    //*github
+    if(message.content.startsWith(config.prefix + "github")) 
+        message.channel.send("https://github.com/marcopandolfo/BotDiscord");
 
     //*atm
     if(message.content.startsWith(config.prefix + "atm")) {
@@ -424,6 +426,10 @@ bot.on('message', message => {
                   {
                     name: "*google",
                     value: "Faz uma pesquisa no google \nEx. *google teclado gamer"
+                  },
+                  {
+                    name: "*github",
+                    value: "Repositório do bot no GitHub :)"
                   }
                 ],
                 timestamp: new Date(),
