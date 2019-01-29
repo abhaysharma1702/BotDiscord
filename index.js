@@ -3,7 +3,6 @@ const bot = new Discord.Client(); // Bot
 const config = require('./config.json');
 const request = require('request'); //biblioteca para request
 const translate = require('@vitalets/google-translate-api'); //api do google tradutor
-const google = require("google"); // biblioteca do google
 
 //Weather Configs
 let apiKey = config.tokenW;
@@ -105,32 +104,6 @@ bot.on('message', message => {
 
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
  
-
-
-    //*google
-    if (message.content.startsWith(config.prefix + "google")) {
-        google.resultsPerPage = 2; //N° resultados
-        google.protocol = 'https'; //protocolo
-        google.lang = 'pt'; //idioma
-        let nextCounter = 0;
-        
-        google(args, function (err, res) {
-            if (err) console.log("Erro: ", err);
-            
-            for (let i = 0; i < res.links.length; ++i) {
-                let link = res.links[i];
-                message.channel.send(link.title + " " + link.href);
-                
-            }
-            
-            if (nextCounter < 1) {
-                nextCounter += 1
-                if (res.next) res.next();
-            }
-            
-        });
-    }
-
     //*ping
     if(message.content.startsWith(config.prefix + "ping")) {
         message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\`**`)
@@ -148,6 +121,10 @@ bot.on('message', message => {
     if(message.content.startsWith(config.prefix + "delete")) {
         if(parseInt(args[1]) < 1 || args[1] == "" || args[1] == " " || args[1] == null) {
             message.channel.send("Por favor insira um numero :) Ex: *delete 3");
+            return;
+        }
+        if(parseInt(args[1]) > 15) {
+            message.channel.send("Insira um numero menor");
             return;
         }
         let number = parseInt(args[1]) + 1;
@@ -428,8 +405,8 @@ bot.on('message', message => {
                     value: "Deleta as mensagems da sala \nEx. *delete 5 > Deleta as ultimas 5 mensagems"
                   },
                   {
-                    name: "*google",
-                    value: "Faz uma pesquisa no google \nEx. *google teclado gamer"
+                    name: "*empy",
+                    value: "empy"
                   },
                   {
                     name: "*github",
