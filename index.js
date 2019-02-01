@@ -12,6 +12,28 @@ let urlTemp = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=
 
 //<!------ Lugar pra deixar umas funções que vao ser usadas alguma hora ------>
 
+const getDefaultChannel = (guild) => {
+    // get "original" default channel
+    if(guild.channels.has(guild.id))
+      return guild.channels.get(guild.id)
+  
+    // Check for a "general" channel, which is often default chat
+    const generalChannel = guild.channels.find(channel => channel.name === "general");
+    if (generalChannel)
+      return generalChannel;
+    // Now we get into the heavy stuff: first channel in order where the bot can speak
+    // hold on to your hats!
+    return guild.channels
+     .filter(c => c.type === "text" &&
+       c.permissionsFor(guild.client.user).has("SEND_MESSAGES"))
+     .sort((a, b) => a.position - b.position ||
+       Long.fromString(a.id).sub(Long.fromString(b.id)).toNumber())
+     .first();
+  }
+
+
+
+
 function addZero(i) {
     if (i < 10) {
         i = "0" + i;           // ---> Gambiarra pra formatar a data e hora do jeito bom
@@ -41,8 +63,11 @@ bot.on('ready', () => {
 //Quando alguem entrar no servidor
 bot.on("guildMemberAdd", (member) => {
     let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
+    let channel = getDefaultChannel(member.guild);
+    
+
     console.log(member.user.username + " Entrou no serividor");
-    bot.channels.get("533835804728885258").send({embed: {
+    channel.send({embed: {
         color: corDoEmbed,
         author: {
           name: bot.user.username,
@@ -66,10 +91,11 @@ bot.on("guildMemberAdd", (member) => {
 //Quando sair do servidor
 bot.on("guildMemberRemove", (member) => {
     if(member.user.username == "BotCachorrão") return;
-    
+
+    let channel = getDefaultChannel(member.guild);
     console.log(member.user.username + " Saiu Do Servidor");
     let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
-    bot.channels.get("533835804728885258").send({embed: {
+    channel.send({embed: {
         color: corDoEmbed,
         author: {
           name: bot.user.username,
