@@ -65,6 +65,8 @@ bot.on("guildMemberAdd", (member) => {
 
 //Quando sair do servidor
 bot.on("guildMemberRemove", (member) => {
+    if(member.user.username == "BotCachorrão") return;
+    
     console.log(member.user.username + " Saiu Do Servidor");
     let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
     bot.channels.get("533835804728885258").send({embed: {
@@ -231,7 +233,7 @@ bot.on('message', message => {
                     timestamp: new Date(),
                   }
                 });
-            }s
+            }
         });
     }
 

@@ -4,7 +4,6 @@
 |:------------:|:----------------------------------------:|
 | *help        | Lista de comandos completa do servidor   |
 | *temperatura | Envia a temperatura atual                |
-| *google      | Faz uma pesquisa no google               |
 | *meme        | Envia um meme aleatorio                  |
 | *count       | 1, 2, 3 GO !!                            |
 | *smoke       | Faz o bot fumar                          |
