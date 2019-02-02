@@ -12,6 +12,8 @@ let urlTemp = `http://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=
 
 //<!------ Lugar pra deixar umas funções que vao ser usadas alguma hora ------>
 
+
+//Pegar canal padrao de texto
 const getDefaultChannel = (guild) => {
     try {
         // get "original" default channel
@@ -120,6 +122,21 @@ bot.on('message', message => {
     
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
     
+    //*contato
+    if(message.content.startsWith(config.prefix + "contato")) {
+        message.channel.send({embed: {
+            color: CorRandon(),
+            author: {
+                name: bot.user.username,
+                icon_url: bot.user.avatarURL
+            },
+            title: "Entre em contato comigo",
+            description: "Encontrou algum problema? \nTem alguma sugestão de comando? \nTem alguma duvida? \nVocê pode falar comigo pelo discord @TheSpecko#8058"
+        }
+    });
+    }
+
+
     //*ping
     if(message.content.startsWith(config.prefix + "ping")) {
         message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\` (bot ping)**`);
@@ -428,6 +445,10 @@ if(message.content.startsWith(config.prefix + "help")) {
                 value: "empy"
             },
             {
+                name: "*sortear x",
+                value: "Sorteia um numero de 0 a x \n Ex. *sortear 8 -- Sorteia um numero de 0 a 8"
+            },
+            {
                 name: "*github",
                 value: "Repositório do bot no GitHub :)"
             }
@@ -448,7 +469,12 @@ if(message.content.startsWith(config.prefix + "help")) {
         },
         title: "Comandos",
         description: "Lista de comandos do servidor :)",
-        fields: [{
+        fields: [
+        {
+            name: "*contato",
+            value: "Bugs, Criticas ou Sugestões? Entre em contato comigo :)"
+        },
+        {
             name: "*count",
             value: "Inicia uma contagem até 3"
         },
@@ -479,10 +505,6 @@ if(message.content.startsWith(config.prefix + "help")) {
         {
             name: "*dog",
             value: "Envia a foto aleatória de um cachorro"
-        },
-        {
-            name: "*sortear x",
-            value: "Sorteia um numero de 0 a x \n Ex. *sortear 8 -- Sorteia um numero de 0 a 8"
         },
         {
             name: "*password",
