@@ -4,12 +4,14 @@
 |:------------:|:----------------------------------------:|
 | *help        | Lista de comandos completa do servidor   |
 | *temperatura | Envia a temperatura atual                |
+| *tradutor    | Traduz o texto para o português          |
 | *meme        | Envia um meme aleatorio                  |
 | *count       | 1, 2, 3 GO !!                            |
+| *roleta      | Morra ou sobreviva !                     |
 | *smoke       | Faz o bot fumar                          |
 | *dog         | Envia uma foto aleatória de um cachorro. |
 | *cat         | Envia uma foto aleatória de um gato.     |
-| *tradutor    | Traduz o texto para o português          |
+| *contato     | Entre em contato comigo                  |
 
 
 
