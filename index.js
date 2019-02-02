@@ -21,7 +21,7 @@ const getDefaultChannel = (guild) => {
         return guild.channels.get(guild.id)
         
         // Check for a "general" channel, which is often default chat
-        const generalChannel = guild.channels.find(channel => channel.name === "general");
+        const generalChannel = guild.channels.find(channel => channel.name === "general" || channel.name === "geral");
         if (generalChannel)
         return generalChannel;
         // Now we get into the heavy stuff: first channel in order where the bot can speak
@@ -85,25 +85,30 @@ bot.on("guildMemberAdd", (member) => {
 });
 
 console.log(member.user.username + " Entrou no serividor");
-channel.send({embed: {
-    color: corDoEmbed,
-    author: {
-        name: bot.user.username,
-        icon_url: bot.user.avatarURL
-    },
-    title: "Bem Vindo",
-    description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor!",
-    thumbnail: {
-        url: member.user.avatarURL
-    },
-    fields: [
-        {  
-            name: "😻",
-            value: "Aeeeeeeeeee!!!!"
-        }],
-        timestamp: new Date(),
-    }
-});
+try {
+    channel.send({embed: {
+        color: corDoEmbed,
+        author: {
+            name: bot.user.username,
+            icon_url: bot.user.avatarURL
+        },
+        title: "Bem Vindo",
+        description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor!",
+        thumbnail: {
+            url: member.user.avatarURL
+        },
+        fields: [
+            {  
+                name: "😻",
+                value: "Aeeeeeeeeee!!!!"
+            }],
+            timestamp: new Date(),
+        }
+    });
+    
+} catch (error) {
+    console.log(error);   
+}
 });
 
 
