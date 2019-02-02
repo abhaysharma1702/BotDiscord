@@ -93,34 +93,6 @@ bot.on("guildMemberAdd", (member) => {
     });
 });
 
-//Quando sair do servidor
-bot.on("guildMemberRemove", (member) => {
-    if(member.user.username == "BotCachorrão") return;
-    
-    let channel = getDefaultChannel(member.guild);
-    console.log(member.user.username + " Saiu Do Servidor");
-    let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
-    channel.send({embed: {
-        color: corDoEmbed,
-        author: {
-            name: bot.user.username,
-            icon_url: bot.user.avatarURL
-        },
-        title: "Saiu do Servidor",
-        description: "O usúario " + member.user.username + " saiu de nosso servidor!",
-        thumbnail: {
-            url: member.user.avatarURL
-        },
-        fields: [
-            {
-                name: "😿",
-                value: "Estou triste"
-            }],
-            timestamp: new Date(),
-        }
-    });
-});
-
 
 //Quando Alguem enviar mensagem
 bot.on('message', message => {
