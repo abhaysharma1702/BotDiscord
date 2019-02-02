@@ -119,6 +119,9 @@ bot.on('message', message => {
     
     //*atm
     if(message.content.startsWith(config.prefix + "atm")) {
+        if(message.author.id == "261991713541718017") {
+            message.reply(bot.guilds.size);
+        }
         console.log("Servidores => " + bot.guilds.size);
     }
     
