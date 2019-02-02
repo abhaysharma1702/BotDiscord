@@ -81,29 +81,29 @@ bot.on("guildMemberAdd", (member) => {
         title: "Bem Vindo ao servidor :)",
         description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor! \nDigite *help para ver a lista de comandos =D",
         timestamp: new Date(),
-        }
-    });
+    }
+});
 
-    console.log(member.user.username + " Entrou no serividor");
-    channel.send({embed: {
-        color: corDoEmbed,
-        author: {
-            name: bot.user.username,
-            icon_url: bot.user.avatarURL
-        },
-        title: "Bem Vindo",
-        description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor!",
-        thumbnail: {
-            url: member.user.avatarURL
-        },
-        fields: [
-            {  
-                name: "😻",
-                value: "Aeeeeeeeeee!!!!"
-            }],
-            timestamp: new Date(),
-        }
-    });
+console.log(member.user.username + " Entrou no serividor");
+channel.send({embed: {
+    color: corDoEmbed,
+    author: {
+        name: bot.user.username,
+        icon_url: bot.user.avatarURL
+    },
+    title: "Bem Vindo",
+    description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor!",
+    thumbnail: {
+        url: member.user.avatarURL
+    },
+    fields: [
+        {  
+            name: "😻",
+            value: "Aeeeeeeeeee!!!!"
+        }],
+        timestamp: new Date(),
+    }
+});
 });
 
 
@@ -130,61 +130,61 @@ bot.on('message', message => {
                 name: bot.user.username,
                 icon_url: bot.user.avatarURL
             },
-            title: "Entre em contato comigo",
-            description: "Encontrou algum problema? \nTem alguma sugestão de comando? \nTem alguma duvida? \nVocê pode falar comigo pelo discord @TheSpecko#8058"
+            title: "Entre em contato comigo :grinning:",
+            description: `>Encontrou algum problema? \n>Tem alguma sugestão de comando? \n>Tem alguma duvida? \n>Você pode falar comigo pelo discord <@261991713541718017>` 
         }
     });
-    }
+}
 
 
-    //*ping
-    if(message.content.startsWith(config.prefix + "ping")) {
-        message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\` (bot ping)**`);
+//*ping
+if(message.content.startsWith(config.prefix + "ping")) {
+    message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\` (bot ping)**`);
+}
+//*github
+if(message.content.startsWith(config.prefix + "github")) 
+message.channel.send("https://github.com/marcopandolfo/BotDiscord");
+
+//*atm
+if(message.content.startsWith(config.prefix + "atm")) {
+    if(message.author.id == "261991713541718017") {
+        message.reply(bot.guilds.size);
     }
-    //*github
-    if(message.content.startsWith(config.prefix + "github")) 
-    message.channel.send("https://github.com/marcopandolfo/BotDiscord");
-    
-    //*atm
-    if(message.content.startsWith(config.prefix + "atm")) {
-        if(message.author.id == "261991713541718017") {
-            message.reply(bot.guilds.size);
+    console.log("Servidores => " + bot.guilds.size);
+}
+
+//*delete
+if(message.content.startsWith(config.prefix + "delete")) {
+    if(parseInt(args[1]) < 1 || args[1] == "" || args[1] == " " || args[1] == null) {
+        message.channel.send("Por favor insira um numero :) Ex: *delete 3");
+        return;
+    }
+    if(parseInt(args[1]) > 15) {
+        message.channel.send("Insira um numero menor");
+        return;
+    }
+    let number = parseInt(args[1]) + 1;
+    message.channel.fetchMessages({limit: number}).then(messages => message.channel.bulkDelete(messages));
+}
+
+
+//*password
+if(message.content.startsWith(config.prefix + "password")) {
+    request("http://www.sethcardoza.com/api/rest/tools/random_password_generator/", function (err, response, body){ //faz o request para a api
+    if(err) {
+        console.log('error', error); //Verifica se deu erro
+    } else {
+        message.channel.send({embed: {
+            color: CorRandon(),
+            author: {
+                name: bot.user.username,
+                icon_url: bot.user.avatarURL
+            },
+            title: "Senha Gerada",
+            description: body
         }
-        console.log("Servidores => " + bot.guilds.size);
-    }
-    
-    //*delete
-    if(message.content.startsWith(config.prefix + "delete")) {
-        if(parseInt(args[1]) < 1 || args[1] == "" || args[1] == " " || args[1] == null) {
-            message.channel.send("Por favor insira um numero :) Ex: *delete 3");
-            return;
-        }
-        if(parseInt(args[1]) > 15) {
-            message.channel.send("Insira um numero menor");
-            return;
-        }
-        let number = parseInt(args[1]) + 1;
-        message.channel.fetchMessages({limit: number}).then(messages => message.channel.bulkDelete(messages));
-    }
-    
-    
-    //*password
-    if(message.content.startsWith(config.prefix + "password")) {
-        request("http://www.sethcardoza.com/api/rest/tools/random_password_generator/", function (err, response, body){ //faz o request para a api
-        if(err) {
-            console.log('error', error); //Verifica se deu erro
-        } else {
-            message.channel.send({embed: {
-                color: CorRandon(),
-                author: {
-                    name: bot.user.username,
-                    icon_url: bot.user.avatarURL
-                },
-                title: "Senha Gerada",
-                description: body
-            }
-        });
-    }
+    });
+}
 });
 }
 
@@ -470,53 +470,53 @@ if(message.content.startsWith(config.prefix + "help")) {
         title: "Comandos",
         description: "Lista de comandos do servidor :)",
         fields: [
-        {
-            name: "*contato",
-            value: "Bugs, Criticas ou Sugestões? Entre em contato comigo :)"
-        },
-        {
-            name: "*count",
-            value: "Inicia uma contagem até 3"
-        },
-        {
-            name: "*temperatura",
-            value: "Envia a temperatura atual"
-        },
-        {
-            name: "*dolar",
-            value: "Enviar o valor atual do dolar"
-        },
-        {
-            name: "*smoke",
-            value: "Faz o bot fumar"
-        },
-        {
-            name: "*meme",
-            value: "Envia um meme aleatorio :)"
-        },
-        {
-            name: "*tradutor",
-            value: "Traduz o texto informado para o português \n Ex. *tradutor Dog"
-        },
-        {
-            name: "*cat",
-            value: "Envia uma foto aleatória de um gato"
-        },
-        {
-            name: "*dog",
-            value: "Envia a foto aleatória de um cachorro"
-        },
-        {
-            name: "*password",
-            value: "Gera uma senha aleatória"
+            {
+                name: "*contato",
+                value: "Bugs, Criticas ou Sugestões? Entre em contato comigo :)"
+            },
+            {
+                name: "*count",
+                value: "Inicia uma contagem até 3"
+            },
+            {
+                name: "*temperatura",
+                value: "Envia a temperatura atual"
+            },
+            {
+                name: "*dolar",
+                value: "Enviar o valor atual do dolar"
+            },
+            {
+                name: "*smoke",
+                value: "Faz o bot fumar"
+            },
+            {
+                name: "*meme",
+                value: "Envia um meme aleatorio :)"
+            },
+            {
+                name: "*tradutor",
+                value: "Traduz o texto informado para o português \n Ex. *tradutor Dog"
+            },
+            {
+                name: "*cat",
+                value: "Envia uma foto aleatória de um gato"
+            },
+            {
+                name: "*dog",
+                value: "Envia a foto aleatória de um cachorro"
+            },
+            {
+                name: "*password",
+                value: "Gera uma senha aleatória"
+            }
+        ],
+        timestamp: new Date(),
+        footer: {
+            icon_url: bot.user.avatarURL,
+            text: "Pagina 1/2 Para a ver a 2ª pagina digite *help 2"
         }
-    ],
-    timestamp: new Date(),
-    footer: {
-        icon_url: bot.user.avatarURL,
-        text: "Pagina 1/2 Para a ver a 2ª pagina digite *help 2"
     }
-}
 });
 }
 }
