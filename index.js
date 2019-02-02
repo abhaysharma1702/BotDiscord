@@ -70,7 +70,18 @@ bot.on("guildMemberAdd", (member) => {
     let corDoEmbed = Math.floor(Math.random() * 9999999); //Gera uma cor aleatoria para o embed
     let channel = getDefaultChannel(member.guild);
     
-    
+    member.send({embed: {
+        color: corDoEmbed,
+        author: {
+            name: bot.user.username,
+            icon_url: bot.user.avatarURL
+        },
+        title: "Bem Vindo ao servidor :)",
+        description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor! \nDigite *help para ver a lista de comandos =D",
+        timestamp: new Date(),
+        }
+    });
+
     console.log(member.user.username + " Entrou no serividor");
     channel.send({embed: {
         color: corDoEmbed,
@@ -111,7 +122,7 @@ bot.on('message', message => {
     
     //*ping
     if(message.content.startsWith(config.prefix + "ping")) {
-        message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\`**`)
+        message.channel.send(`:ping_pong: Pong! **\`${bot.pings[0]}ms\` (bot ping)**`);
     }
     //*github
     if(message.content.startsWith(config.prefix + "github")) 
