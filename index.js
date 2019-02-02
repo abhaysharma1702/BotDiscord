@@ -79,7 +79,7 @@ bot.on("guildMemberAdd", (member) => {
             icon_url: bot.user.avatarURL
         },
         title: "Bem Vindo ao servidor :)",
-        description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor! \nDigite *help para ver a lista de comandos =D",
+        description: "Seja bem-vindo(a) " + member.user.username + " ao nosso Servidor! \nDigite *help para ver a lista de comandos =D \nTem alguma sugestão de comando? Mande no meu discord ! <@261991713541718017>",
         timestamp: new Date(),
     }
 });
@@ -122,6 +122,19 @@ bot.on('message', message => {
     
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
     
+
+    //*roleta
+    if(message.content.startsWith(config.prefix + "roleta")) {
+        randomNumber = Math.floor(Math.random() * (6 - 1) + 1);
+        if(randomNumber == 2){
+            message.reply("Died! 💀");
+        } else {
+            message.reply("Survived! 😃");
+        }
+    }
+
+
+
     //*contato
     if(message.content.startsWith(config.prefix + "contato")) {
         message.channel.send({embed: {
@@ -441,12 +454,12 @@ if(message.content.startsWith(config.prefix + "help")) {
                 value: "Deleta as mensagems da sala \nEx. *delete 5 > Deleta as ultimas 5 mensagems"
             },
             {
-                name: "*empy",
-                value: "empy"
-            },
-            {
                 name: "*sortear x",
                 value: "Sorteia um numero de 0 a x \n Ex. *sortear 8 -- Sorteia um numero de 0 a 8"
+            },
+            {
+                name: "*roleta",
+                value: "Morra ou Sobreviva"
             },
             {
                 name: "*github",
