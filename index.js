@@ -3,6 +3,15 @@ const bot = new Discord.Client(); // Bot
 const config = require('./config.json');
 const request = require('request'); //biblioteca para request
 const translate = require('@vitalets/google-translate-api'); //api do google tradutor
+const sqlite3 = require('sqlite3').verbose();
+
+let db = new sqlite3.Database('db/charadas.sqlite', sqlite3.OPEN_READWRITE, (err) => { //abrir/conectar no db
+    if (err) {
+        console.error(err.message);
+    }
+    console.log('Connected to the database.');
+});
+
 
 //Weather Configs
 let apiKey = config.tokenW;
@@ -39,9 +48,7 @@ const getDefaultChannel = (guild) => {
 }
 
 
-
-
-function addZero(i) {
+let addZero = (i) => {
     if (i < 10) {
         i = "0" + i;           // ---> Gambiarra pra formatar a data e hora do jeito bom
     }
@@ -49,7 +56,7 @@ function addZero(i) {
 }
 
 
-function CorRandon() {
+let CorRandon = () => {
     return Math.floor(Math.random() * 9999999);  // ---> Gera uma cor aleatorio para usar nos embed's
 }
 
@@ -127,31 +134,54 @@ bot.on('message', message => {
     
     if(message.author.bot) return; //Se o bot for o autor da msg, ele nao faz nada (retorna)
     
+    
+    
+    //*charada
+    if (message.content.startsWith(config.prefix + "charada")) {
 
-    //*roleta
-    if(message.content.startsWith(config.prefix + "roleta")) {
-        randomNumber = Math.floor(Math.random() * (6 - 1) + 1);
-        if(randomNumber == 2){
-            message.reply("Died! 💀");
-        } else {
-            message.reply("Survived! 😃");
-        }
-    }
+        let randomId = Math.floor((Math.random() * 1816) + 1);
 
-
-
-    //*contato
-    if(message.content.startsWith(config.prefix + "contato")) {
-        message.channel.send({embed: {
-            color: CorRandon(),
-            author: {
-                name: bot.user.username,
-                icon_url: bot.user.avatarURL
-            },
-            title: "Entre em contato comigo :grinning:",
-            description: `>Encontrou algum problema? \n>Tem alguma sugestão de comando? \n>Tem alguma duvida? \n>Você pode falar comigo pelo discord <@261991713541718017>` 
+        db.get(`SELECT * FROM charadas WHERE id='${randomId}'`, (err, result) => {
+            if(err) console.log("Deu erro no SQL > " + err);
+            else {
+                message.channel.send({embed: {
+                    color: CorRandon(),
+                    author: {
+                        name: bot.user.username,
+                        icon_url: bot.user.avatarURL
+                    },
+                    title: "Charada",
+                    description: `${result.pergunta} \n ${result.resposta}`
+                }
+            });
         }
     });
+}
+
+//*roleta
+if(message.content.startsWith(config.prefix + "roleta")) {
+    randomNumber = Math.floor(Math.random() * (6 - 1) + 1);
+    if(randomNumber == 2){
+        message.reply("Died! 💀");
+    } else {
+        message.reply("Survived! 😃");
+    }
+}
+
+
+
+//*contato
+if(message.content.startsWith(config.prefix + "contato")) {
+    message.channel.send({embed: {
+        color: CorRandon(),
+        author: {
+            name: bot.user.username,
+            icon_url: bot.user.avatarURL
+        },
+        title: "Entre em contato comigo :grinning:",
+        description: `>Encontrou algum problema? \n>Tem alguma sugestão de comando? \n>Tem alguma duvida? \n>Você pode falar comigo pelo discord <@261991713541718017>` 
+    }
+});
 }
 
 
@@ -188,7 +218,7 @@ if(message.content.startsWith(config.prefix + "delete")) {
 
 //*password
 if(message.content.startsWith(config.prefix + "password")) {
-    request("http://www.sethcardoza.com/api/rest/tools/random_password_generator/", function (err, response, body){ //faz o request para a api
+    request("http://www.sethcardoza.com/api/rest/tools/random_password_generator/", (err, response, body) => { //faz o request para a api
     if(err) {
         console.log('error', error); //Verifica se deu erro
     } else {
@@ -456,7 +486,7 @@ if(message.content.startsWith(config.prefix + "help")) {
             description: "Lista de comandos do servidor :)",
             fields: [{
                 name: "*delete x",
-                value: "Deleta as mensagems da sala \nEx. *delete 5 > Deleta as ultimas 5 mensagems"
+                value: "Deleta as mensagems da sala \nEx. *delete 5 Deleta as ultimas 5 mensagems"
             },
             {
                 name: "*sortear x",
@@ -469,6 +499,10 @@ if(message.content.startsWith(config.prefix + "help")) {
             {
                 name: "*github",
                 value: "Repositório do bot no GitHub :)"
+            },
+            {
+                name: "*password",
+                value: "Gera uma senha aleatória"
             }
         ],
         timestamp: new Date(),
@@ -491,6 +525,10 @@ if(message.content.startsWith(config.prefix + "help")) {
             {
                 name: "*contato",
                 value: "Bugs, Criticas ou Sugestões? Entre em contato comigo :)"
+            },
+            {
+                name: "*charada",
+                value: "Envia uma charada aleatória"
             },
             {
                 name: "*count",
@@ -522,11 +560,7 @@ if(message.content.startsWith(config.prefix + "help")) {
             },
             {
                 name: "*dog",
-                value: "Envia a foto aleatória de um cachorro"
-            },
-            {
-                name: "*password",
-                value: "Gera uma senha aleatória"
+                value: "Envia uma foto aleatória de um cachorro"
             }
         ],
         timestamp: new Date(),

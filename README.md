@@ -4,6 +4,7 @@
 |:------------:|:----------------------------------------:|
 | *help        | Lista de comandos completa do servidor   |
 | *temperatura | Envia a temperatura atual                |
+| *charada     | Envia uma charad aleatória               |
 | *tradutor    | Traduz o texto para o português          |
 | *meme        | Envia um meme aleatorio                  |
 | *count       | 1, 2, 3 GO !!                            |
