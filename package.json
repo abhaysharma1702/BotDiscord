@@ -1,26 +1,30 @@
 {
-  "name": "discbot",
+  "name": "botcachorrao",
   "version": "1.0.0",
-  "description": "Discord Bot",
+  "description": "Discord bot",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "help"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/marcopandolfo/BotDiscord.git"
   },
-  "author": "",
+  "keywords": [
+    "bot",
+    "discordbot",
+    "discord"
+  ],
+  "author": "Marco Antonio Pandolfo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/marcopandolfo/BotDiscord/issues"
   },
   "homepage": "https://github.com/marcopandolfo/BotDiscord#readme",
   "dependencies": {
-    "@vitalets/google-translate-api": "^2.5.0",
+    "@vitalets/google-translate-api": "^2.7.0",
     "discord.js": "^11.4.2",
-    "google": "^2.1.0",
-    "google-translate-api": "^2.3.0",
+    "enmap": "^4.8.0",
     "request": "^2.88.0",
     "sqlite3": "^4.0.6"
   }
