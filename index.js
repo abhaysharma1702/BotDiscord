@@ -36,4 +36,8 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
+client.on('error', error => {
+    console.log(error);
+});
+
 client.login(config.token);
