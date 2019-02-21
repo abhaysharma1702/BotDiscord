@@ -6,6 +6,10 @@ exports.run = async (client, message, args) => {
             title: ":closed_book: Lista de Comandos 2ª página :closed_book:",
             fields: [
                 {
+                    name: `${client.config.prefix}votacao <titulo>`,
+                    value: "Inicia uma votação \nEx. *votacao Devemos banir fulano do servidor?"
+                },
+                {
                     name: `${client.config.prefix}delete x`,
                     value: "Deleta as ultimas mensagens da sala \nEx. *delete 5 Deleta as ultimas 5 mensagems"
                 },
