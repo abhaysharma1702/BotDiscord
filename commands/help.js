@@ -39,7 +39,7 @@ exports.run = async (client, message, args) => {
                 }],
             footer: {
                     icon_url: client.user.avatarURL,
-                    text: `Pagina 1/2 Para a ver a 2ª pagina digite ${client.config.prefix}help 2`
+                    text: `Pagina 2/2`
                 },
             timestamp: new Date(),
         }});
