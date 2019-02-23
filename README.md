@@ -4,6 +4,7 @@
 |:------------:|:----------------------------------------:|
 | *help        | Lista de comandos completa do servidor   |
 | *temperatura | Envia a temperatura atual                |
+| *1vs1        | Desafie alguém para uma batalha          |
 | *votacao     | Inicia uma votação                       |
 | *charada     | Envia uma charada aleatória              |
 | *tradutor    | Traduz o texto para o português          |
