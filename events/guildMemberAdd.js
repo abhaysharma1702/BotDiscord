@@ -24,7 +24,7 @@ module.exports = async (client, member) => {
             icon_url: client.user.avatarURL
         },
         title: ":tada: Bem Vindo :tada:",
-        description: `Olá @${member.user.username} Seja bem-vindo(a) ao nosso servidor !`,
+        description: `Olá ${member} Seja bem-vindo(a) ao nosso servidor !`,
         thumbnail: {
             url: member.user.avatarURL
         },

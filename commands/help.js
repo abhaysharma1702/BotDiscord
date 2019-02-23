@@ -39,12 +39,12 @@ exports.run = async (client, message, args) => {
                 }],
             footer: {
                     icon_url: client.user.avatarURL,
-                    text: `Pagina 2/2`
+                    text: `Pagina 2/3 Para a ver a 3ª pagina digite *help 3`
                 },
             timestamp: new Date(),
         }});
     }
-    else {
+    else if(args[0] == 1 || args[0] == null || args[0] == " "){
         //1° pagina
         message.channel.send({embed: {
             color: 16711680,
@@ -83,7 +83,22 @@ exports.run = async (client, message, args) => {
             }],
         footer: {
             icon_url: client.user.avatarURL,
-            text: "Pagina 1/2 Para a ver a 2ª pagina digite *help 2"
+            text: "Pagina 1/3 Para a ver a 2ª pagina digite *help 2"
+        },
+        timestamp: new Date()
+        }});
+    } else if(args[0] == 3) {
+        //3° pagina
+        message.channel.send({embed: {
+            color: 16711680,
+            title: ":closed_book: Lista de Comandos 3ª página :closed_book:",
+            fields: [{
+                name: `${client.config.prefix}1vs1`,
+                value: "Desafie alguém para uma batalha! \nEx. 1v1 @nick1 @nick2"
+            }],
+        footer: {
+            icon_url: client.user.avatarURL,
+            text: "Página 3/3"
         },
         timestamp: new Date()
         }});
