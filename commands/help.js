@@ -95,6 +95,14 @@ exports.run = async (client, message, args) => {
             fields: [{
                 name: `${client.config.prefix}1vs1`,
                 value: "Desafie alguém para uma batalha! \nEx. 1v1 @nick1 @nick2"
+            }, 
+            {
+                name: `${client.config.prefix}welcome`,
+                value: `Definir o canal que o bot irá mandar as mensagens de boas vindas \nEx. welcome 1234567891234`
+            }, 
+            {
+                name: `${client.config.prefix}emoji`,
+                value : `O bot manda a foto de um emoji \nEx. emoji :thinking: `
             }],
         footer: {
             icon_url: client.user.avatarURL,

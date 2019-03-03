@@ -1,5 +1,5 @@
 module.exports = (client, message) => {
-    console.log("> [" + message.author.username + "] - " + message.content);
+    // console.log("> [" + message.author.username + "] - " + message.content);
     if(message.type == "dm") console.log('dm');
     
 

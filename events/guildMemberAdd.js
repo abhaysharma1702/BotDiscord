@@ -2,7 +2,9 @@ const util = require('../util/util.js');
 module.exports = async (client, member) => {
 
     let corDoEmbed = util.getRandonColor();
-    let channel = util.getDefaultChannel(member.guild);
+
+    let channel_id = util.getWelcomeChat(member.guild);
+    let channel = client.channels.get(channel_id);
 
     //Mandar DM para a pessoa que entrou
     member.send({embed: {
