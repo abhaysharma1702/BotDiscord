@@ -1,7 +1,4 @@
-module.exports = (client, message) => {
-    console.log("> [" + message.author.username + "] - " + message.content);
-    if(message.type == "dm") console.log('dm');
-    
+module.exports = (client, message) => {    
 
     if (message.author.bot) return;
     if (message.content.indexOf(client.config.prefix) !== 0) return;
